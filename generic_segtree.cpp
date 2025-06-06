@@ -87,13 +87,13 @@ struct SegTree {
 struct Node1 {
     int val;  // may change
     Node1() {  // Identity element
-        val = 0;  // may change
+        val = INF;  // may change
     }
     Node1(int p1) {  // Actual Node
         val = p1;  // may change
     }
     void merge(Node1 &l, Node1 &r) {  // Merge two child nodes
-        val = l.val ^ r.val;  // may change
+        val = min(l.val,r.val);  // may change
     }
 };
 
@@ -108,13 +108,29 @@ struct Update1 {
 };
     
 void solve() {
+    int n;cin>>n;int q;cin>>q;
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i)
+    {
+        cin>>a[i];
+    }
+    SegTree<Node1,Update1>sgt(n,a);
+    while(q--){
+        int tp,l,r;cin>>tp>>l>>r;
+        if(tp==1){
+            sgt.make_update(l-1,r);
+        }
+        else if(tp==2){
+            cout<<sgt.make_query(l-1,r-1).val<<endl;
+        }
+    }
 }
 
 signed main() {
     fast_io();
     
     int tt = 1;
-    cin >> tt;
+    // cin >> tt;
     
     for (int i = 1; i <= tt; i++) {
         solve();
